@@ -7,8 +7,9 @@ interface Params {
 const script: Firebot.CustomScript<Params> = {
   getScriptManifest: () => {
     return {
-      name: "Starter Custom Script",
-      description: "A starter custom script for build",
+      name: "Browser Source Credits",
+      description:
+        "A credits plugin that operates through a browser source in OBS",
       author: "SomeDev",
       version: "1.0",
       firebotVersion: "5",
