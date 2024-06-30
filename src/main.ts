@@ -4,8 +4,11 @@ import * as packageJson from "../package.json";
 import { AllEffects } from "./firebot/effects";
 import { Effects } from "@crowbartools/firebot-custom-scripts-types/types/effects";
 
-export const { name: namespace, version } = packageJson;
-export const commandPrefix: string = "Credits (by Oceanity)";
+export const {
+  name: namespace,
+  displayName: commandPrefix,
+  version,
+} = packageJson;
 
 interface Params {
   currency: "USD";
@@ -33,7 +36,9 @@ const script: Firebot.CustomScript<Params> = {
     };
   },
   run: (runRequest) => {
-    const { httpServer, effectManager } = runRequest.modules;
+    const { httpServer, effectManager, logger } = runRequest.modules;
+
+    logger.info(`Running ${commandPrefix} [${namespace}] v${version}`);
 
     // Register all endpoints
     for (const endpoint of AllEndpoints) {
@@ -43,6 +48,8 @@ const script: Firebot.CustomScript<Params> = {
 
     // Register all effects
     for (const effect of AllEffects) {
+      effect.definition.id = `${namespace}:${effect.definition.id}`;
+      effect.definition.name = `${commandPrefix}: ${effect.definition.name}`;
       effectManager.registerEffect(
         effect as Effects.EffectType<{ [key: string]: any }>
       );

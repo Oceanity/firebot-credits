@@ -1,28 +1,26 @@
 import { Firebot } from "@crowbartools/firebot-custom-scripts-types";
-import { namespace } from "@/main";
-import { commandPrefix } from "@/main";
 
 export const AddCreditsEntryEffect: Firebot.EffectType<{
   type: [CreditEntryType, string];
 }> = {
   definition: {
-    id: `${namespace}:add-credit-entry`,
-    name: `${commandPrefix}: Change Playback Volume`,
-    description: "Changes playback volume of active Spotify device",
-    icon: "fas fa-list-alt",
+    id: "add-credit-entry",
+    name: "Add Entry",
+    description: "Adds an entry to the credits list",
+    icon: "fad align-center",
     categories: ["integrations"],
     //@ts-expect-error ts2353
     outputs: [
       {
-        label: "Volume was changed",
+        label: "Entry Added",
         description:
-          "Will be true if the playback volume was changed successfully, false if not.",
-        defaultName: "volumeChanged",
+          "Will be true if the entry was added successfully, false if not.",
+        defaultName: "entryAdded",
       },
       {
         label: "Error Message",
         description:
-          "If the playback volume was not changed successfully, will contain an error message.",
+          "If the entry was not changed successfully, will contain an error message.",
         defaultName: "error",
       },
     ],

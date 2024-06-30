@@ -1,5 +1,6 @@
 {
   "name": "oceanity-credits",
+  "displayName": "Credits (by Oceanity)",
   "scriptOutputName": "oceanityCredits",
   "version": "0.1.1",
   "description": "Browser Source-based credits plugin for Firebot",
