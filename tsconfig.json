@@ -11,6 +11,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "sourceMap": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,
@@ -26,6 +27,6 @@
     "types": ["jest", "node", "node/http"],
     "skipLibCheck": true
   },
-  "include": ["./src/**/*"],
+  "include": ["./src/**/*", "src/types"],
   "exclude": ["node_modules", "./dist/**/*"]
 }
