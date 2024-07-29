@@ -3,6 +3,10 @@ import { AllEndpoints } from "./firebot/gateway";
 import * as packageJson from "../package.json";
 import { AllEffects } from "./firebot/effects";
 import { Effects } from "@crowbartools/firebot-custom-scripts-types/types/effects";
+import { initModules } from "@oceanity/firebot-helpers/firebot";
+import { pathExists, copyFile, constants as fsConstants } from "fs-extra";
+import { resolve } from "path";
+import { CreditsService } from "./credits";
 
 export const {
   name: namespace,
@@ -13,6 +17,8 @@ export const {
 interface Params {
   currency: "USD";
 }
+
+export let credits: CreditsService;
 
 const script: Firebot.CustomScript<Params> = {
   getScriptManifest: () => {
@@ -35,10 +41,21 @@ const script: Firebot.CustomScript<Params> = {
       },
     };
   },
-  run: (runRequest) => {
+  run: async (runRequest) => {
     const { httpServer, effectManager, logger } = runRequest.modules;
+    initModules(runRequest.modules);
 
-    logger.info(`Running ${commandPrefix} [${namespace}] v${version}`);
+    credits = new CreditsService();
+
+    // Check if settings exists, if not, copy default
+    if (!(await pathExists(resolve(__dirname, "./settings.json")))) {
+      logger.info("Copying default settings.json");
+      await copyFile(
+        resolve(__dirname, "./settings.default.json"),
+        resolve(__dirname, "./settings.json"),
+        fsConstants.COPYFILE_FICLONE
+      );
+    }
 
     // Register all endpoints
     for (const endpoint of AllEndpoints) {

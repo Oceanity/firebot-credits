@@ -1,5 +1,7 @@
-import { Firebot } from "@crowbartools/firebot-custom-scripts-types";
-import { namespace, commandPrefix } from "@/main";
 import { AddCreditsEntryEffect } from "./addCreditEntry";
+import { ClearCreditsEffect } from "./clearCredits";
 
-export const AllEffects = [AddCreditsEntryEffect];
+export const AllEffects = [
+  AddCreditsEntryEffect,
+  ClearCreditsEffect
+];

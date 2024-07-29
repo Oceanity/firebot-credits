@@ -1,15 +1,19 @@
+import { credits } from "@/main";
+
 export const CreditsEndpoint: ApiEndpoint = [
   "",
   "GET",
   async (_req: HttpRequest, res: HttpResponse) => {
+    const creditsHtml = await credits.html.getCurrentCredits();
+
     try {
       res.status(200).send(`
         <html>
           <head>
-            <title>Credits</title>
+            <title>Custom Credits (by Oceanity)</title>
           </head>
           <body>
-            <h1>Credits</h1>
+            ${creditsHtml}
           </body>
         </html>
       `);

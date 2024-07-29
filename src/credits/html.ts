@@ -7,20 +7,26 @@ export class CreditsHtmlService {
     this.credits = credits;
   }
 
-  public async getSection(type: CreditEntryType) {
-    switch (type) {
-      case "follow":
-        return "<h1>Followers</h1>";
-      case "sub":
-        return "<h1>Subscribers</h1>";
-      case "cheer":
-        return "<h1>Cheers</h1>";
-      case "tip":
-        return "<h1>Tips</h1>";
-      case "other":
-        return "<h1>Other</h1>";
-      default:
-        return "";
-    }
+
+  public async getCurrentCredits() {
+    const credits = await this.credits.db.getCreditsArray();
+
+    const creditsHtml = credits.map(section =>`
+      <div class="credits-section" id="credits-section-${section.id}">
+        <h1 class="credits-header"${section.titleColor ? ` style="color: ${section.titleColor}"` : ""}>${section.title}</h1>
+        <ul class="credits-entries">
+          ${Object.values(section.entries ?? {}).map(entry => `
+            <li class="credits-entry">
+              <div class="credits-entry-image">${entry.imageUrl ? `<img src="${entry.imageUrl}" />` : ""}</div>
+              <div class="credits-entry-info">
+                <div class="credits-entry-name"${entry.displayNameColor ? ` style="color: ${entry.displayNameColor}"` : ""}>${entry.displayName}</div>
+                ${entry.subtitle ? `<div class="credits-entry-subtitle"${entry.subtitleColor ? ` style="color: ${entry.subtitleColor}"` : ""}>${entry.subtitle}</div>` : ""}
+              </div>
+            </li>
+          `).join("")}
+      </div>
+    `);
+
+    return creditsHtml.join("");
   }
 }

@@ -24,8 +24,8 @@ module.exports = {
   plugins: [
     new CopyWebpackPlugin({
       patterns: [{
-        from: path.resolve(__dirname, "src/settings.json"),
-        to: path.resolve(__dirname, `dist/${scriptOutputName}/settings.json`),
+        from: path.resolve(__dirname, "src/settings.default.json"),
+        to: path.resolve(__dirname, `dist/${scriptOutputName}/settings.default.json`),
       }],
     }),
     new ZipWebpackPlugin({
